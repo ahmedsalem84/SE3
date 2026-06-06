@@ -16,27 +16,6 @@ This repository contains the complete implementation, datasets, evaluation pipel
 4. **Hybrid Multi-Objective Fitness Function**: Balances structural modularity (TurboMQ) with semantic cohesion (Cosine Similarity of embeddings).
 5. **LLM-Driven Service Naming**: Automatically aggregates class context within resolved clusters to propose domain-relevant microservice names.
 
----
-
-## Directory Structure
-
-```text
-├── data/
-│   ├── PetClinic/          # Dataset D1 (Spring PetClinic)
-│   ├── JHotDraw/           # Dataset D2 (JHotDraw)
-│   └── MyBatis3/           # Dataset D3 (MyBatis 3)
-├── src/
-│   ├── extraction/         # Static analysis and AST dependency parsing
-│   ├── embeddings/         # Ollama/Llama3 semantic embedding pipeline
-│   ├── optimizers/         # Implementation of CSA and the 7 baseline metaheuristics
-│   │   ├── csa.py          # Proposed Circle Search Algorithm
-│   │   ├── pso.py, ga.py   # Baselines (PSO, GA, WOA, GWO, SSA, FA, DE)
-│   │   └── fitness.py      # Dual-objective evaluation (MQ + Coh)
-│   ├── evaluation/         # Ground truth mapping, Wilcoxon test, and Optuna tuning scripts
-│   └── main.py             # Main entry point to run experimental trials
-├── results/                # Output metrics, convergence histories, and generated radar plots
-├── requirements.txt        # Python dependency list
-└── README.md
 
 Getting Started
 
