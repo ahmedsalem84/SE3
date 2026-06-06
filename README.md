@@ -92,61 +92,9 @@ The evaluation protocol involves three heterogeneous, open-source Java systems:
 | $\mathcal{D}_2$ | **JHotDraw**         | GUI Framework         | 152     | 4,500 | Desktop Monolith     |
 | $\mathcal{D}_3$ | **MyBatis 3**        | Persistence Framework | 235     | 9,800 | Layered Architecture |
 
-License
-
-This project is licensed under the MIT License - see the LICENSE file for
-details.
 
 
----
 
-# Part 2: Manuscript Peer Review & Recommendations
 
-*Scientific Reports* requires articles to be scientifically robust, methodologically sound, and clearly written. Below is an objective critique of your manuscript based on the provided text, highlighting novelty, methodological details, and potential points of concern for peer reviewers.
 
----
 
-## 1. Evaluation of Novelty & Contribution
-* **Strengths:** 
-  * The integration of **LLM-derived semantic embeddings** directly inside the fitness evaluation of a metaheuristic optimizer (rather than as a post-processing clustering step) is a strong contribution. Most existing approaches use simple Information Retrieval (like TF-IDF) or apply traditional clustering algorithms (such as K-means) to the embeddings, which fail to explore the complex, NP-hard search space of class assignments.
-  * Introducing the **Circle Search Algorithm (CSA)** to Search-Based Software Engineering (SBSE) is novel. Its concentric search mechanism effectively addresses the "Fitness-Fidelity Gap" where standard optimizers (like PSO) overfit to structural fitness while producing logically incoherent clusters.
-
----
-
-## 2. Critical Issues to Address Prior to Submission
-
-### A. Clarification on the Embedding Model (Page 9, Section 3.2.2)
-* **The Issue:** The text states: *"The Llama3 model generates token embedding sequences through its final hidden layer when it processes documentation corpus... We selected Llama3 model..."*
-* **Reviewer Concern:** Standard Llama3 is a causal decoder-only generative model. While it is possible to extract embeddings from its last token hidden state, it is not optimized for semantic text similarity. Typically, embedding-specific models (e.g., `mxbai-embed-large` or `nomic-embed-text`) are used in Ollama's `/api/embeddings` endpoint. 
-* **Recommendation:** Clarify if you utilized a specific embedding model via Ollama or if you programmatically extracted the hidden layers of the standard Llama3 instruction model. If the latter, briefly explain how the token sequences of variable length were pooled (e.g., mean pooling) to ensure reproducibility.
-
-### B. Explanation of the Low Ground Truth (GT) Accuracy Values (Tables 6, 7, & 8)
-* **The Issue:** The absolute mean Ground Truth Accuracy values (representing the Adjusted Rand Index) are low across all algorithms (e.g., CSA achieves $0.0503$ on $\mathcal{D}_1$, $0.0036$ on $\mathcal{D}_2$, and $0.0085$ on $\mathcal{D}_3$). 
-* **Reviewer Concern:** A reviewer unfamiliar with software clustering might flag an ARI of $\approx 0.05$ as a failed optimization. 
-* **Recommendation:** Add a short paragraph explaining this phenomenon. Explicitly state that package hierarchies in monolithic systems represent logical organization rather than flat microservice divisions, and utility packages (such as `common` or `utils`) heavily penalize absolute ARI metrics. Emphasize that while absolute ARI values are low across all SBSE literature, the *relative* improvement (e.g., CSA outperforming GA by 3.6x) is the key indicator of success.
-
-### C. Placeholder Images (Pages 8, 15, 19, 21, 23, 26, 27)
-* **The Issue:** Several figures contain placeholder text (e.g., `framework.png`, `pca_petclinic.png`, `time_efficiency.png`, etc.) [8, 15, 19, 21, 23, 26, 27].
-* **Recommendation:** Ensure all these figures are properly rendered as high-resolution images (preferably EPS or PDF format for vector clarity) before submission, as *Scientific Reports* has strict visual quality guidelines.
-
----
-
-## 3. Structural & Textual Corrections
-
-### A. Typos and OCR Artifacts
-* **Page 1 (Abstract):** *"presents a signifi cant software engineering challenge"* $\rightarrow$ change to **"significant"** (remove the space).
-* **Page 2 (Section 1):** *"...Machine Learning (ML),particularly with..."* $\rightarrow$ add a space: **"(ML), particularly with"**.
-* **Page 4 (Section 1.4):** *"...Large Language Model„ we are capable..."* $\rightarrow$ change the low double comma (`„`) to a standard comma: **"Large Language Model, we are capable"**.
-* **Page 12 (Algorithm 1):** Line 16 has double opening quotes: `”Namethisservice”` $\rightarrow$ change to standard straight quotes: `"Namethisservice"`.
-* **Page 24 (Section 5.4):** In Table 9, the caption says *"(✓) denotes Statistical Significance..."* but the table body uses `✓` symbols. Double-check that the font renders correctly across all system PDF engines.
-
-### B. Unresolved Abbreviations
-* **Page 5 (Background):** *"...widely applied for SAR and microservice..."*
-* **Correction:** Define **SAR** upon first usage. If it refers to **Software Architecture Recovery**, explicitly write it out.
-
----
-
-## 4. Submission Checklist for *Scientific Reports*
-1. **Statistical Power**: Your choice of 30 independent runs and the **Wilcoxon Signed-Rank Test** with $p < 0.05$ provides the level of statistical rigor expected by the journal [17, 24].
-2. **Data Availability Statement**: Ensure that the links provided in "Availability of Data and Materials" (Page 33) are public and active [33].
-3. **Competing Interests**: Ensure the "Competing Interests" and "Funding" declarations conform to the journal's exact templates [32].
